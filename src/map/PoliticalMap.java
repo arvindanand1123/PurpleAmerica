@@ -1,13 +1,15 @@
 /*
- * Political Map Project
- * Name:
- * Block:
+ * Political Map Project 
+ * 
+ * Name: Arvind Anand, Christian Womack, Tahir(Syed) Shezad
+ * Block:7
  * 
  * Program Purpose:
- *
- * Algorithm:
+ *  vAlpha 1.1: Prints map of USA. Map is blue. Paints with borders.
  * 
- * Future/possible improvements:
+ * Algorithm: 
+ *  vAlpha 1.1: Basic algorithm; prints 
+ * Future/possible improvements: Only a working map, need to build project off of this template
  *
  */
 package map;
@@ -23,27 +25,24 @@ import java.util.Scanner;
  * @author
  */
 public class PoliticalMap {
-    
+
     public static void main(String[] args) throws FileNotFoundException {
-        File file = new File("C:\\Users\\hcps-ananda\\Documents\\NetBeansProjects\\PurpleAmerica\\src\\data\\USA.txt");
+        File file = new File("C:\\Users\\hcps-ananda\\Documents\\NetBeansProjects\\PurpleAmerica\\src\\data\\USA-county.txt");
         double[] ary1;
         double[] ary2;
         StdDraw.setCanvasSize(800, 400);
         StdDraw.setPenColor(Color.decode("#3385ff"));
         Scanner scanner = new Scanner(file);
-        /**
-         * Rather messy code here, fill the nextDouble calls with variables.
-         */
-        scanner.nextDouble();
-        scanner.nextDouble();
-        scanner.nextDouble();
-        scanner.nextDouble();
-        //Unused, I don't know why we need this actually
+        double latMin = scanner.nextDouble();
+        double longMin = scanner.nextDouble();
+        double latMax = scanner.nextDouble();
+        double longMax = scanner.nextDouble();
         int regionNumber = scanner.nextInt();
-        StdDraw.setXscale(-125.731216, -66.980385);
-        StdDraw.setYscale(24.544102, 49.384365);
+        StdDraw.setXscale(latMin - 1, latMax + 1);
+        StdDraw.setYscale(longMin - 1, longMax + 1);
         scanner.next();
-        while (scanner.hasNext() || scanner.hasNextDouble()) {
+        for (int x = 0; x < regionNumber; x++) {
+            //Found no use for these two variables quite yet
             String state = scanner.nextLine();
             String district = scanner.nextLine();
             int pointNumber = scanner.nextInt();
@@ -57,11 +56,19 @@ public class PoliticalMap {
             }
             if (scanner.hasNext()) {
                 scanner.next();
+                StdDraw.setPenColor(Color.BLACK);
+                StdDraw.polygon(ary1, ary2);
+                StdDraw.setPenColor(Color.decode("#3385ff"));
                 StdDraw.filledPolygon(ary1, ary2);
+
             } else {
+                StdDraw.setPenColor(Color.BLACK);
+                StdDraw.polygon(ary1, ary2);
+                StdDraw.setPenColor(Color.decode("#3385ff"));
                 StdDraw.filledPolygon(ary1, ary2);
+
             }
         }
-        
+
     }
 }
