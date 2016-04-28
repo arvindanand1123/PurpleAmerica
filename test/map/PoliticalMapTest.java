@@ -5,6 +5,7 @@
  */
 package map;
 
+import java.io.IOException;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -21,7 +22,7 @@ public class PoliticalMapTest {
      * Test of main method, of class PoliticalMap.
      */
     @Test
-    public void testMain() {
+    public void testMain() throws IOException {
         System.out.println("main");
         String[] args = null;
         PoliticalMap.main(args);

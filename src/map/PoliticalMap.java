@@ -5,22 +5,17 @@
  * Block:7
  *
  * Program Purpose:
- *  vAlpha 1.1: Prints map of USA. Map is blue. Paints with borders.
+ *  vAlpha 1.3: Added UI (Under devleopment), currently doesn't work. 
+                New, more legible, version of the map.
  *
  * Algorithm:
- *  vAlpha 1.1: Basic algorithm; prints
- * Future/possible improvements: Only a working map, need to build project off of this template
+ *  vAlpha 1.3: Same as v1.1
+ * Future/possible improvements: Make RBG Values. Need to scale the jFrame for any map drawn
  *
  */
 package map;
 
-import edu.princeton.cs.introcs.*;
-import java.awt.Color;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.util.Scanner;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.io.IOException;
 import javax.swing.JFrame;
 
 /**
@@ -29,65 +24,153 @@ import javax.swing.JFrame;
  */
 public class PoliticalMap extends JFrame {
 
-    public static void main(String[] args) {
+    private javax.swing.JButton jButton1;
+    private javax.swing.JComboBox jComboBox1;
+    private javax.swing.JComboBox jComboBox2;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+
+    public static void main(String[] args) throws IOException {
         java.awt.EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
-                new PoliticalMap().setVisible(true);
+                new PoliticalMap().initComponents();
+                
             }
         });
-        try {
-            populateMap();
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(PoliticalMap.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        PoliticalMap pm = new PoliticalMap();
+        pm.run(args);
 
     }
-//For Commit
-    public static void populateMap() throws FileNotFoundException {
-        File file = new File("C:\\Users\\hcps-womackcz\\Documents\\PurpleAmerica_Anand_Shezad_Womack\\src\\data\\USA-county.txt");
-        double[] ary1;
-        double[] ary2;
-        StdDraw.setCanvasSize(800, 400);
-        StdDraw.setPenColor(Color.decode("#3385ff"));
-        Scanner scanner = new Scanner(file);
-        double latMin = scanner.nextDouble();
-        double longMin = scanner.nextDouble();
-        double latMax = scanner.nextDouble();
-        double longMax = scanner.nextDouble();
-        int regionNumber = scanner.nextInt();
-        StdDraw.setXscale(latMin - 1, latMax + 1);
-        StdDraw.setYscale(longMin - 1, longMax + 1);
-        scanner.next();
-        for (int x = 0; x < regionNumber; x++) {
-            //Found no use for these two variables quite yet
-            String state = scanner.nextLine();
-            String district = scanner.nextLine();
-            int pointNumber = scanner.nextInt();
-            ary1 = new double[pointNumber];
-            ary2 = new double[pointNumber];
-            int i = 0;
-            while (scanner.hasNextDouble() || scanner.hasNextInt()) {
-                ary1[i] = scanner.nextDouble();
-                ary2[i] = scanner.nextDouble();
-                i++;
+
+    public void run(String[] args) throws IOException {
+        DrawMap drawMap = new DrawMap();
+        drawMap.populateMap();
+    }
+    //UI UNDER DEVELOPMENT
+    private void initComponents() {
+
+        jComboBox1 = new javax.swing.JComboBox();
+        jButton1 = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
+        jComboBox2 = new javax.swing.JComboBox();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[]{"USA", "USA-Country", "AK", "Al", "AR", "AZ", "CA", "CO", "CT", "DC", "DE", "FL", "GA", "HI", "IA", "ID", "IL", "IN", "KS", "KY", "LA", "MA", "MD", "ME", "MI", "MN", "MO", "MS", "MT ", "NC", "ND", "NE", "NH", "NJ", "NM", "NV ", "NY", "OH", "OK", "OR", "PA", "RI", "SC", "SD", "TN", "TX", "UT", "VA", "WA", "WI", "WV", "WY"}));
+        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+            @Override
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox1ActionPerformed(evt);
             }
-            if (scanner.hasNext()) {
-                scanner.next();
-                StdDraw.setPenColor(Color.BLACK);
-                StdDraw.polygon(ary1, ary2);
-                StdDraw.setPenColor(Color.decode("#3385ff"));
-                StdDraw.filledPolygon(ary1, ary2);
+        });
 
-            } else {
-                StdDraw.setPenColor(Color.BLACK);
-                StdDraw.polygon(ary1, ary2);
-                StdDraw.setPenColor(Color.decode("#3385ff"));
-                StdDraw.filledPolygon(ary1, ary2);
-
+        jButton1.setText("Go!");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            @Override
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
             }
-        }
+        });
 
+        jLabel2.setFont(new java.awt.Font("MS PMincho", 1, 24)); // NOI18N
+        jLabel2.setText("Choose your state here ");
+
+        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel(new String[]{"1960", "1964", "1968", "1972", "1976", "1980", "1984", "1988", "1992", "1996", "2000", "2004", "2008", "2012"}));
+
+        jLabel3.setFont(new java.awt.Font("MS PMincho", 1, 24)); // NOI18N
+        jLabel3.setText("Choose your year here");
+
+        jLabel4.setText("Copyright © The Flying Falafels 2016");
+
+        jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/map/VERSUS.png"))); // NOI18N
+
+        jLabel5.setFont(new java.awt.Font("DokChampa", 1, 36)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(0, 0, 171));
+        jLabel5.setText("PURPLE");
+
+        jLabel7.setFont(new java.awt.Font("DokChampa", 1, 36)); // NOI18N
+        jLabel7.setForeground(new java.awt.Color(189, 0, 0));
+        jLabel7.setText("AMERICA");
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(84, 84, 84)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jLabel2)
+                                .addComponent(jLabel3))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, 14, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(60, 60, 60))
+                                        .addGroup(layout.createSequentialGroup()
+                                                .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addContainerGap()))))
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel5)
+                                        .addGap(45, 45, 45)
+                                        .addComponent(jLabel7))
+                                .addComponent(jLabel6))
+                        .addGap(60, 60, 60))
+                .addGroup(layout.createSequentialGroup()
+                        .addGap(157, 157, 157)
+                        .addComponent(jLabel4)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        layout.setVerticalGroup(
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(16, 16, 16)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jLabel5)
+                                .addComponent(jLabel7))
+                        .addGap(26, 26, 26)
+                        .addComponent(jLabel6)
+                        .addGap(87, 87, 87)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jLabel2)
+                                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(27, 27, 27)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jLabel3)
+                                .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 60, Short.MAX_VALUE)
+                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+
+        pack();
+    }
+
+    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {
+        // TODO add your handling code here:
+        //File file = new File("C:\\Users\\hcps-womackcz\\Documents\\PurpleAmerica_Anand_Shezad_Womack\\src\\data\\" + comboBox.getText() + ".txt");
+        //GET THE PATH AND SET THE TEXT CHOSEN TO THE TEXT FILE
+
+    }
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {
+        // TODO add your handling code here:
+        //+ "" THE YEAR TO END OF THE STATE IF APPLICABLE (DON'T REQUIRE ONE)
     }
 
 }
