@@ -5,8 +5,8 @@
  * Block:7
  *
  * Program Purpose:
- *  vAlpha 1.3: Added UI (Under devleopment), currently doesn't work. 
-                New, more legible, version of the map.
+ *  vBeta 1.0: Working UI. 
+ New, more legible, version of the map.
  *
  * Algorithm:
  *  vAlpha 1.3: Same as v1.1
@@ -16,6 +16,8 @@
 package map;
 
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFrame;
 
 /**
@@ -24,9 +26,9 @@ import javax.swing.JFrame;
  */
 public class PoliticalMap extends JFrame {
 
-    private javax.swing.JButton jButton1;
-    private javax.swing.JComboBox jComboBox1;
-    private javax.swing.JComboBox jComboBox2;
+    private javax.swing.JButton go;
+    private javax.swing.JComboBox mapSelector;
+    private javax.swing.JComboBox yearSelector;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -34,30 +36,46 @@ public class PoliticalMap extends JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
 
+    public PoliticalMap() {
+        initComponents();
+    }
+
     public static void main(String[] args) throws IOException {
+
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Metal".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(Menu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(Menu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(Menu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(Menu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+
         java.awt.EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
-                new PoliticalMap().initComponents();
-                
+                new PoliticalMap().setVisible(true);
+
             }
         });
-        PoliticalMap pm = new PoliticalMap();
-        pm.run(args);
 
     }
 
-    public void run(String[] args) throws IOException {
-        DrawMap drawMap = new DrawMap();
-        drawMap.populateMap();
-    }
     //UI UNDER DEVELOPMENT
     private void initComponents() {
 
-        jComboBox1 = new javax.swing.JComboBox();
-        jButton1 = new javax.swing.JButton();
+        mapSelector = new javax.swing.JComboBox();
+        go = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
-        jComboBox2 = new javax.swing.JComboBox();
+        yearSelector = new javax.swing.JComboBox();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
@@ -66,26 +84,26 @@ public class PoliticalMap extends JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[]{"USA", "USA-Country", "AK", "Al", "AR", "AZ", "CA", "CO", "CT", "DC", "DE", "FL", "GA", "HI", "IA", "ID", "IL", "IN", "KS", "KY", "LA", "MA", "MD", "ME", "MI", "MN", "MO", "MS", "MT ", "NC", "ND", "NE", "NH", "NJ", "NM", "NV ", "NY", "OH", "OK", "OR", "PA", "RI", "SC", "SD", "TN", "TX", "UT", "VA", "WA", "WI", "WV", "WY"}));
-        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+        mapSelector.setModel(new javax.swing.DefaultComboBoxModel(new String[]{"USA", "USA-county", "AK", "Al", "AR", "AZ", "CA", "CO", "CT", "DC", "DE", "FL", "GA", "HI", "IA", "ID", "IL", "IN", "KS", "KY", "LA", "MA", "MD", "ME", "MI", "MN", "MO", "MS", "MT ", "NC", "ND", "NE", "NH", "NJ", "NM", "NV ", "NY", "OH", "OK", "OR", "PA", "RI", "SC", "SD", "TN", "TX", "UT", "VA", "WA", "WI", "WV", "WY"}));
+        mapSelector.addActionListener(new java.awt.event.ActionListener() {
             @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox1ActionPerformed(evt);
+                mapSelectorActionPerformed(evt);
             }
         });
 
-        jButton1.setText("Go!");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        go.setText("Go!");
+        go.addActionListener(new java.awt.event.ActionListener() {
             @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                goActionPerformed(evt);
             }
         });
 
         jLabel2.setFont(new java.awt.Font("MS PMincho", 1, 24)); // NOI18N
         jLabel2.setText("Choose your state here ");
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel(new String[]{"1960", "1964", "1968", "1972", "1976", "1980", "1984", "1988", "1992", "1996", "2000", "2004", "2008", "2012"}));
+        yearSelector.setModel(new javax.swing.DefaultComboBoxModel(new String[]{"1960", "1964", "1968", "1972", "1976", "1980", "1984", "1988", "1992", "1996", "2000", "2004", "2008", "2012"}));
 
         jLabel3.setFont(new java.awt.Font("MS PMincho", 1, 24)); // NOI18N
         jLabel3.setText("Choose your year here");
@@ -113,13 +131,13 @@ public class PoliticalMap extends JFrame {
                                 .addComponent(jLabel3))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, 14, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(go, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(mapSelector, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                 .addGap(60, 60, 60))
                                         .addGroup(layout.createSequentialGroup()
-                                                .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(yearSelector, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                 .addContainerGap()))))
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -147,13 +165,13 @@ public class PoliticalMap extends JFrame {
                         .addGap(87, 87, 87)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(jLabel2)
-                                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(mapSelector, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(27, 27, 27)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(jLabel3)
-                                .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(yearSelector, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(go, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 60, Short.MAX_VALUE)
                         .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -161,16 +179,22 @@ public class PoliticalMap extends JFrame {
         pack();
     }
 
-    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {
+    private void mapSelectorActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
         //File file = new File("C:\\Users\\hcps-womackcz\\Documents\\PurpleAmerica_Anand_Shezad_Womack\\src\\data\\" + comboBox.getText() + ".txt");
         //GET THE PATH AND SET THE TEXT CHOSEN TO THE TEXT FILE
 
     }
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
-        //+ "" THE YEAR TO END OF THE STATE IF APPLICABLE (DON'T REQUIRE ONE)
+    private void goActionPerformed(java.awt.event.ActionEvent evt) {
+        String base = "src/data/";
+        DrawMap drawMap = new DrawMap(base + mapSelector.getSelectedItem() + ".txt");
+        try {
+            drawMap.populateMap(base + mapSelector.getSelectedItem() + yearSelector.getSelectedItem() + ".txt");
+            //+ "" THE YEAR TO END OF THE STATE IF APPLICABLE (DON'T REQUIRE ONE)
+        } catch (IOException ex) {
+            Logger.getLogger(PoliticalMap.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
 }
