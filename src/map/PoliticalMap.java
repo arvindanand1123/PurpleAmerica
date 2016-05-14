@@ -5,13 +5,13 @@
  * Block:7
  *
  * Program Purpose:
- *  vBeta 1.0: Working UI. 
- New, more legible, version of the map.
+ *  vBeta 1.2: Colors underdevelopment while trying to optimize map reproduction.
  *
  * Algorithm:
- *  vAlpha 1.3: Same as v1.1
- * Future/possible improvements: Make RBG Values. Need to scale the jFrame for any map drawn
- *
+ *   - ADD TO LATER
+ * 
+ * Future/possible improvements: 
+ *  Fix colors
  */
 package map;
 
