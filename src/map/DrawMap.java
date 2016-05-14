@@ -7,52 +7,45 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Scanner;
 
-/*The states are still skewed; that still in progress*/
-
 public class DrawMap {
 
-    File file;
+    String path;
 
-    public DrawMap() {
-        file = new File("C:\\Users\\hcps-shehzadst\\Documents\\Programs for 2016\\PurpleAmerica_Anand_Shezad_Womack\\src\\data\\CA.txt");
+    public DrawMap(String s) {
+        path = s;
 
     }
 
-    public void populateMap() throws FileNotFoundException, IOException {
+    public void populateMap(String dataPath) throws FileNotFoundException, IOException {
         double[] ary1;
         double[] ary2;
-
-        Scanner scanner = new Scanner(file);
+        StdDraw.setCanvasSize(1000, 500);
+        File file = new File(path);
+        File data = new File(dataPath);
+        Scanner dataScan = new Scanner(data.getAbsoluteFile());
+        dataScan.useDelimiter("[^\\\\p{Alnum},\\\\.-]");
+        Scanner scanner = new Scanner(file.getAbsoluteFile());
         double latMin = scanner.nextDouble();
         double longMin = scanner.nextDouble();
         double latMax = scanner.nextDouble();
         double longMax = scanner.nextDouble();
         int regionNumber = scanner.nextInt();
-        
-        /*double d = (latMin*-1)*(10);
-        
-        d = java.lang.Math.pow(d, .15);
-        
-        d = d*450;*/
-
-        //StdDraw.setCanvasSize(/*(int)d*/latMax, longMax);
-        //System.out.println(latMax + " " + latMin);
-        //System.out.println(latMax/longMax);
-        //System.out.println(d);
-        //double w = latMax*(-1)*10;
-        //double h = longMax*10;
-        StdDraw.setCanvasSize(1366/2, 768/2);
-        System.out.println(latMin);
-        System.out.println(latMax);
-        System.out.println(longMin);
-        System.out.println(longMax);
-        StdDraw.setXscale(latMin -1, latMax +1);
-        StdDraw.setYscale(longMin -1, longMax +1);
- 
-
-        scanner.next();
+        StdDraw.setXscale(latMin - 1, latMax + 1);
+        StdDraw.setYscale(longMin - 1, longMax + 1);
+        dataScan.nextLine();
+        scanner.next(); 
+        double[] r = new double[50];
+        double[] g = new double[50];
+        double[] b = new double[50];
+        int p = 0;
+        while (dataScan.hasNextLine()) {
+            if(dataScan.hasNextInt()){
+                System.out.println(dataScan.nextInt());
+            } else{
+                System.out.println(false);
+            }
+        }
         for (int x = 0; x < regionNumber; x++) {
-            //Found no use for these two variables quite yet
             String state = scanner.nextLine();
             String district = scanner.nextLine();
             int pointNumber = scanner.nextInt();
@@ -66,18 +59,20 @@ public class DrawMap {
             }
             if (scanner.hasNext()) {
                 scanner.next();
-                StdDraw.setPenColor(Color.BLACK);
+                //Color color = new Color((int) Math.ceil(100.0 * r), (int) Math.ceil(100.0 * g), (int) Math.ceil(100.0 * b));
+                StdDraw.setPenColor(Color.blue);
                 StdDraw.filledPolygon(ary1, ary2);
-                StdDraw.setPenColor(Color.decode("#3385ff"));
+                StdDraw.setPenColor(Color.BLACK);
                 StdDraw.polygon(ary1, ary2);
 
             } else {
-                StdDraw.setPenColor(Color.BLACK);
+                //Color color = new Color((int) Math.ceil(100.0 * r), (int) Math.ceil(100.0 * g), (int) Math.ceil(100.0 * b));
+                StdDraw.setPenColor(Color.blue);
                 StdDraw.filledPolygon(ary1, ary2);
-                StdDraw.setPenColor(Color.decode("#3385ff"));
+                StdDraw.setPenColor(Color.BLACK);
                 StdDraw.polygon(ary1, ary2);
             }
-        }
 
+        }
     }
 }
