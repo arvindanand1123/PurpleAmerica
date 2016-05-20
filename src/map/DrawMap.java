@@ -5,6 +5,8 @@ import java.awt.Color;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Scanner;
 
 public class DrawMap {
@@ -19,11 +21,11 @@ public class DrawMap {
     public void populateMap(String dataPath) throws FileNotFoundException, IOException {
         double[] ary1;
         double[] ary2;
+        HashMap map = new HashMap();
         StdDraw.setCanvasSize(1000, 500);
         File file = new File(path);
         File data = new File(dataPath);
         Scanner dataScan = new Scanner(data.getAbsoluteFile());
-        dataScan.useDelimiter("[^\\\\p{Alnum},\\\\.-]");
         Scanner scanner = new Scanner(file.getAbsoluteFile());
         double latMin = scanner.nextDouble();
         double longMin = scanner.nextDouble();
@@ -33,20 +35,32 @@ public class DrawMap {
         StdDraw.setXscale(latMin - 1, latMax + 1);
         StdDraw.setYscale(longMin - 1, longMax + 1);
         dataScan.nextLine();
-        scanner.next(); 
-        double[] r = new double[50];
-        double[] g = new double[50];
-        double[] b = new double[50];
+        scanner.next();
+
         int p = 0;
+        ArrayList<String> stringAry = new ArrayList();
         while (dataScan.hasNextLine()) {
-            if(dataScan.hasNextInt()){
-                System.out.println(dataScan.nextInt());
-            } else{
-                System.out.println(false);
-            }
+            stringAry.add(dataScan.nextLine());
+            p++;
         }
+        int r = 0;
+        int g = 0;
+        int b = 0;
+        
+        
+
         for (int x = 0; x < regionNumber; x++) {
+            String mainString = null;
             String state = scanner.nextLine();
+            if (map.containsKey(state)) {
+                mainString = (String) map.get(state);
+                map.remove(state);
+            } else {
+                if (x <= 50) {
+                    map.put(state, stringAry.get(x));
+                    mainString = stringAry.get(x);
+                }
+            }
             String district = scanner.nextLine();
             int pointNumber = scanner.nextInt();
             ary1 = new double[pointNumber];
@@ -57,22 +71,91 @@ public class DrawMap {
                 ary2[i] = scanner.nextDouble();
                 i++;
             }
+
+            if (mainString != null) {
+                String concatString = "";
+                int lastIndex = 0;
+                for (i = 0; i < mainString.length(); i++) {
+                    if (mainString.codePointAt(i) <= 57 && mainString.codePointAt(i) >= 48) {
+                        if (mainString.charAt(i + 1) == ',' && i < mainString.length()) {
+                            concatString = concatString + mainString.charAt(i);
+                            lastIndex = i;
+                            i = mainString.length();
+                        } else {
+                            concatString = concatString + mainString.charAt(i);
+
+                        }
+                    }
+                }
+                r = Integer.parseInt(concatString);
+                mainString = mainString.substring(lastIndex + 1);
+            }
+
+            if (mainString != null) {
+                String concatString = "";
+                int lastIndex = 0;
+                for (i = 0; i < mainString.length(); i++) {
+                    if (mainString.codePointAt(i) <= 57 && mainString.codePointAt(i) >= 48) {
+                        if (mainString.charAt(i + 1) == ',' && i < mainString.length()) {
+                            concatString = concatString + mainString.charAt(i);
+                            lastIndex = i;
+                            i = mainString.length();
+                        } else {
+                            concatString = concatString + mainString.charAt(i);
+
+                        }
+                    }
+                }
+                b = Integer.parseInt(concatString);
+                mainString = mainString.substring(lastIndex + 1);
+            }
+
+            if (mainString != null) {
+                String concatString = "";
+                int lastIndex = 0;
+                for (i = 0; i < mainString.length(); i++) {
+                    if (mainString.codePointAt(i) <= 57 && mainString.codePointAt(i) >= 48) {
+                        if (mainString.charAt(i + 1) == ',' && i < mainString.length()) {
+                            concatString = concatString + mainString.charAt(i);
+                            lastIndex = i;
+                            i = mainString.length();
+                        } else {
+                            concatString = concatString + mainString.charAt(i);
+
+                        }
+                    }
+                }
+                g = Integer.parseInt(concatString);
+                mainString = mainString.substring(lastIndex + 1);
+            }
+            double sum = r + g + b;
+
             if (scanner.hasNext()) {
                 scanner.next();
-                //Color color = new Color((int) Math.ceil(100.0 * r), (int) Math.ceil(100.0 * g), (int) Math.ceil(100.0 * b));
-                StdDraw.setPenColor(Color.blue);
+                Color color = new Color((float)(r / sum), (float) (g / sum), (float) (b / sum));
+                StdDraw.setPenColor(color);
                 StdDraw.filledPolygon(ary1, ary2);
                 StdDraw.setPenColor(Color.BLACK);
                 StdDraw.polygon(ary1, ary2);
 
             } else {
-                //Color color = new Color((int) Math.ceil(100.0 * r), (int) Math.ceil(100.0 * g), (int) Math.ceil(100.0 * b));
-                StdDraw.setPenColor(Color.blue);
+                Color color = new Color((float) (r / sum), (float)(g / sum), (float) (b / sum));
+                StdDraw.setPenColor(color);
                 StdDraw.filledPolygon(ary1, ary2);
                 StdDraw.setPenColor(Color.BLACK);
                 StdDraw.polygon(ary1, ary2);
             }
 
         }
+    }
+    
+    
+    public void inputParsing(String mainString){
+        int x = 0;
+        if(mainString.length() == 1){
+            return;
+        }
+        
+        
     }
 }

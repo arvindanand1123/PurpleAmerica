@@ -5,7 +5,7 @@
  * Block:7
  *
  * Program Purpose:
- *  vBeta 1.2: Colors underdevelopment while trying to optimize map reproduction.
+ *  vBeta 1.3: Colors underdevelopment while trying to optimize map reproduction. Working on better GUI.
  *
  * Algorithm:
  *   - ADD TO LATER
