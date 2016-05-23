@@ -1,5 +1,6 @@
-package map;
 
+package map;
+//importing classes that are going to be used
 import edu.princeton.cs.introcs.StdDraw;
 import java.awt.Color;
 import java.io.File;
@@ -9,31 +10,42 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
 
+//Drawing map class begins here
 public class DrawMap {
 
     String path;
-
+    
     public DrawMap(String s) {
         path = s;
 
     }
 
+    //Here we are drawing the picture
     public void populateMap(String dataPath) throws FileNotFoundException, IOException {
         double[] ary1;
         double[] ary2;
         HashMap map = new HashMap();
+        //Setting the canvas size to 1000 pixels vertically and 500 horizontally
         StdDraw.setCanvasSize(1000, 500);
         File file = new File(path);
         File data = new File(dataPath);
         Scanner dataScan = new Scanner(data.getAbsoluteFile());
         Scanner scanner = new Scanner(file.getAbsoluteFile());
+        //Getting cordinates to draw map using latitude and longitude values
         double latMin = scanner.nextDouble();
         double longMin = scanner.nextDouble();
         double latMax = scanner.nextDouble();
         double longMax = scanner.nextDouble();
-        int regionNumber = scanner.nextInt();
-        StdDraw.setXscale(latMin - 1, latMax + 1);
+        //finding the region number to tell the program what map to draw
+        int regionNumber = scanner.nextInt(); 
+        //Drawing actual map
+        //it has "- 1" and "+ 1" to have a buffer between edge of the screen and the map
+        StdDraw.setXscale(latMin + 1, latMax + 1);
         StdDraw.setYscale(longMin - 1, longMax + 1);
+        /*System.out.println(latMin - 1);
+        System.out.println(latMax - 1);
+        System.out.println(longMin - 1);
+        System.out.println(longMax - 1);*/
         dataScan.nextLine();
         scanner.next();
 
@@ -130,9 +142,11 @@ public class DrawMap {
             }
             double sum = r + g + b;
 
+            //if else statement to set colors of maps
             if (scanner.hasNext()) {
                 scanner.next();
                 Color color = new Color((float)(r / sum), (float) (g / sum), (float) (b / sum));
+                //Drawing in color
                 StdDraw.setPenColor(color);
                 StdDraw.filledPolygon(ary1, ary2);
                 StdDraw.setPenColor(Color.BLACK);
