@@ -25,7 +25,7 @@ import javax.swing.JFrame;
  * @author
  */
 public class PoliticalMap extends JFrame {
-
+    //declaring variables for the menu
     private javax.swing.JButton go;
     private javax.swing.JComboBox mapSelector;
     private javax.swing.JComboBox yearSelector;
@@ -99,10 +99,11 @@ public class PoliticalMap extends JFrame {
                 goActionPerformed(evt);
             }
         });
-
+        //setting jlabel2 to a certain font
         jLabel2.setFont(new java.awt.Font("MS PMincho", 1, 24)); // NOI18N
+        //setting text
         jLabel2.setText("Choose your state here ");
-
+        
         yearSelector.setModel(new javax.swing.DefaultComboBoxModel(new String[]{"1960", "1964", "1968", "1972", "1976", "1980", "1984", "1988", "1992", "1996", "2000", "2004", "2008", "2012"}));
 
         jLabel3.setFont(new java.awt.Font("MS PMincho", 1, 24)); // NOI18N
