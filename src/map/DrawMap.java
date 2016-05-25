@@ -25,27 +25,32 @@ public class DrawMap {
         double[] ary1;
         double[] ary2;
         HashMap map = new HashMap();
-        //Setting the canvas size to 1000 pixels vertically and 500 horizontally
-        StdDraw.setCanvasSize(1000, 500);
-        File file = new File(path);
-        File data = new File(dataPath);
-        Scanner dataScan = new Scanner(data.getAbsoluteFile());
-        Scanner scanner = new Scanner(file.getAbsoluteFile());
         //Getting cordinates to draw map using latitude and longitude values
+        File file = new File(path);
+        Scanner scanner = new Scanner(file.getAbsoluteFile());
         double latMin = scanner.nextDouble();
         double longMin = scanner.nextDouble();
         double latMax = scanner.nextDouble();
         double longMax = scanner.nextDouble();
+        //Setting the canvas size to 1000 pixels vertically and 500 horizontally
+        
+        double xFactor = 400/(longMax - longMin);
+        double yFactor = xFactor *((-1*latMin)-(-1*latMax));
+        int zFactor = (int)yFactor;
+        StdDraw.setCanvasSize(zFactor, 500);
+        
+        File data = new File(dataPath);
+        Scanner dataScan = new Scanner(data.getAbsoluteFile());
+
+
         //finding the region number to tell the program what map to draw
         int regionNumber = scanner.nextInt(); 
         //Drawing actual map
         //it has "- 1" and "+ 1" to have a buffer between edge of the screen and the map
-        StdDraw.setXscale(latMin + 1, latMax + 1);
+        StdDraw.setXscale(latMin - 1, latMax + 1);
         StdDraw.setYscale(longMin - 1, longMax + 1);
-        /*System.out.println(latMin - 1);
-        System.out.println(latMax - 1);
-        System.out.println(longMin - 1);
-        System.out.println(longMax - 1);*/
+        System.out.println((-1*latMin)-(-1*latMax));
+        System.out.println(longMax - longMin);
         dataScan.nextLine();
         scanner.next();
 
