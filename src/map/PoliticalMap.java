@@ -5,13 +5,13 @@
  * Block:7
  *
  * Program Purpose:
- *  vBeta 1.3: Colors underdevelopment while trying to optimize map reproduction. Working on better GUI.
+ *  vBeta 2.0: Colors fully working
  *
  * Algorithm:
- *   - ADD TO LATER
+ *   - Very messy at the moment
  * 
  * Future/possible improvements: 
- *  Fix colors
+ *  Add extra functionality and fix USAcounty.txt drawing
  */
 package map;
 
