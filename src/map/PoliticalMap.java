@@ -5,10 +5,10 @@
  * Block:7
  *
  * Program Purpose:
- *  vBeta 2.0: Colors fully working
+ *  vBeta 2.1: Colors fully working, better algorithm
  *
  * Algorithm:
- *   - Very messy at the moment
+ *   - Still messy but cleaner
  * 
  * Future/possible improvements: 
  *  Add extra functionality and fix USAcounty.txt drawing
